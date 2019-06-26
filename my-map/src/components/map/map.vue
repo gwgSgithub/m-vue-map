@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import {AMapManager} from 'vue-amap'
+import {AMapManager, lazyAMapApiLoaderInstance} from 'vue-amap'
 let amapManager = new AMapManager()
 export default {
   data () {
@@ -52,7 +52,9 @@ export default {
       loaded: false,
       events: {
         init () {
-          self.initSearch()
+          lazyAMapApiLoaderInstance.load().then(() => {
+            self.initSearch()
+          })
         },
         // 点击获取地址的数据
         click (e) {
